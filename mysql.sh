@@ -56,7 +56,7 @@ else
     echo "mysql server is already enabled. nothing to do"
 fi
 
-systemctl is-active --quiet mysqld
+systemctl is-active mysqld
 
 if [ $? -ne 0 ]
 then
