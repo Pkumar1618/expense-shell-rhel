@@ -44,11 +44,27 @@ then
 else
     echo "mysql is already install. nothing to do"
 fi
-systemctl enable mysqld &>>$LOG_FILE
-VALIDATE $? "Enabled mysql server"
 
-systemctl start mysqld &>>$LOG_FILE
-VALIDATE $? "started mysql server"
+systemctl list enabled mysqld
+
+if [ $? -ne 0 ]
+then
+    echo "Mysql server is not enabled. going to enable"
+    systemctl enable mysqld &>>$LOG_FILE
+    VALIDATE $? "Enabled mysql server"
+else
+    echo "mysql server is already enabled. nothing to do"
+fi
+
+systemctl list started mysqld
+
+if [ $? -ne 0 ]
+then
+    systemctl start mysqld &>>$LOG_FILE
+    VALIDATE $? "started mysql server"
+else
+    echo "mysql sever is already started. nothing to do"
+fi
 
 mysql -h mysql.daws81.online -u root -pExpenseApp@1 -e "show databases;" &>>"$LOG_FILE"
 
