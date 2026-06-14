@@ -38,9 +38,9 @@ if [ $? -ne 0 ]
 then
     dnf module disable nodejs -y
     echo "nodejs is not disabled. going to disable."
-    VALIDATE $? "disabling the nodejs"
+    VALIDATE $? "Disable default nodejs"
 else
-    echo "nodejs is already disabled. nothing to do"
+    echo "nodejs is already default disabled. nothing to do"
 fi
 
 dnf module list enabled nodejs
