@@ -70,4 +70,17 @@ else
     echo "NodeJS is already installed. Nothing to do."
 fi
 
+USERNAME=expense
+
+id "$USERNAME" >/dev/null 2>&1
+
+if [ $? -ne 0 ]
+then
+    echo "User $USERNAME does not exist. Creating..."
+    useradd "$USERNAME"
+    VALIDATE $? "Creating user $USERNAME"
+else
+    echo "User $USERNAME already exists. Nothing to do."
+fi
+
 
