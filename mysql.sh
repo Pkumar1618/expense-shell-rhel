@@ -61,9 +61,9 @@ systemctl is-active mysqld
 if [ $? -ne 0 ]
 then
     systemctl start mysqld &>>$LOG_FILE
-    VALIDATE $? "started mysql server"
+    VALIDATE $? "activate mysql server"
 else
-    echo "mysql sever is already started. nothing to do"
+    echo "mysql sever is already activated. nothing to do"
 fi
 
 mysql -h mysql.daws81.online -u root -pExpenseApp@1 -e "show databases;" &>>"$LOG_FILE"
