@@ -35,36 +35,36 @@ echo "Script started executing at: $(date)" | tee -a $LOG_FILE
 CHECK_ROOT
 
 # Disable default NodeJS module if not already disabled
-dnf module list disabled nodejs >/dev/null 2>&1
+dnf module list disabled nodejs >/dev/null 2>&1 | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
     echo "NodeJS module is not disabled. Disabling..."
-    dnf module disable nodejs -y
+    dnf module disable nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Disable default nodejs"
 else
     echo "NodeJS module is already disabled. Nothing to do."
 fi
 
 # Enable NodeJS 20 stream if not already enabled
-dnf module list enabled nodejs | grep -q "20"
+dnf module list enabled nodejs | grep -q "20" | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
     echo "NodeJS:20 module is not enabled. Enabling..."
-    dnf module enable nodejs:20 -y
+    dnf module enable nodejs:20 -y | tee -a $LOG_FILE
     VALIDATE $? "Enable nodejs:20"
 else
     echo "NodeJS:20 module is already enabled. Nothing to do."
 fi
 
 # Install NodeJS package if not already installed
-dnf list installed nodejs >/dev/null 2>&1
+dnf list installed nodejs >/dev/null 2>&1 | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
     echo "NodeJS is not installed. Installing..."
-    dnf install nodejs -y
+    dnf install nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Install nodejs"
 else
     echo "NodeJS is already installed. Nothing to do."
@@ -77,7 +77,7 @@ id "$USERNAME" >/dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "User $USERNAME does not exist. Creating..."
-    useradd "$USERNAME"
+    useradd "$USERNAME" | tee -a $LOG_FILE
     VALIDATE $? "Creating user $USERNAME"
 else
     echo "User $USERNAME already exists. Nothing to do."
