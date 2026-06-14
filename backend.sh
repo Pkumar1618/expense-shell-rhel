@@ -55,7 +55,7 @@ then
     dnf module enable nodejs:20 -y | tee -a $LOG_FILE
     VALIDATE $? "Enable nodejs:20"
 else
-    echo "NodeJS:20 module is already enabled. $Y Nothing to do.$N"
+    echo "NodeJS:20 module is already enabled. Nothing to do."
 fi
 
 # Install NodeJS package if not already installed
