@@ -37,9 +37,32 @@ dnf module list disabled nodejs
 if [ $? -ne 0 ]
 then
     dnf module disable nodejs -y
-    echo "nodejs is not disabled. go to disable."
+    echo "nodejs is not disabled. going to disable."
     VALIDATE $? "disabling the nodejs"
 else
     echo "nodejs is already disabled. nothing to do"
 fi
+
+dnf module list enabled nodejs
+
+if [ $? -ne 0 ]
+then 
+    dnf module enable nodejs:20 -y
+    echo "nodejs is not enabled. going to enable."
+    VALIDATE $? "enabling the nodejs"
+else 
+    echo "nodejs is already enabled. nothing to do"
+fi
+
+dnf list installed nodejs
+
+if [ $? -ne 0 ]
+then
+    dnf install nodejs -y
+    echo "nodejs is not installed. going to install"
+    VALIDATE $? "Installing nodejs"
+else
+    echo "nodejs is installed. nothing to do"
+fi
+
 
