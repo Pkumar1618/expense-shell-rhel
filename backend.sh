@@ -80,7 +80,7 @@ then
     useradd "$USERNAME" | tee -a $LOG_FILE
     VALIDATE $? "Creating user $USERNAME"
 else
-    echo "User $USERNAME already exists. $Y SKIPPING..$N"
+    echo "User $USERNAME already exists. nothing to do"
 fi
 
 mkdir -p /app
