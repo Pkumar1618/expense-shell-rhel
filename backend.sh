@@ -76,7 +76,7 @@ id "$USERNAME" >/dev/null 2>&1
 
 if [ $? -ne 0 ]
 then
-    echo "User $USERNAME does not exist. $G Creating..$N"
+    echo "User $USERNAME does not exist. Creating.."
     useradd "$USERNAME" | tee -a $LOG_FILE
     VALIDATE $? "Creating user $USERNAME"
 else
