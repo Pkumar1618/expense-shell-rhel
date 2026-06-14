@@ -39,11 +39,11 @@ dnf module list disabled nodejs >/dev/null 2>&1 | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
-    echo "NodeJS module is not disabled. Disabling..."
+    echo "NodeJS module is not disabled. $G Disabling..$N"
     dnf module disable nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Disable default nodejs"
 else
-    echo "NodeJS module is already disabled. Nothing to do."
+    echo "NodeJS module is already disabled. $G Nothing to do.$N"
 fi
 
 # Enable NodeJS 20 stream if not already enabled
@@ -51,7 +51,7 @@ dnf module list enabled nodejs | grep -q "20" | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
-    echo "NodeJS:20 module is not enabled. Enabling..."
+    echo "NodeJS:20 module is not enabled. $G Enabling...$N"
     dnf module enable nodejs:20 -y | tee -a $LOG_FILE
     VALIDATE $? "Enable nodejs:20"
 else
@@ -63,7 +63,7 @@ dnf list installed nodejs >/dev/null 2>&1 | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
-    echo "NodeJS is not installed. Installing..."
+    echo "NodeJS is not installed. $G Installing...$N"
     dnf install nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Install nodejs"
 else
@@ -76,11 +76,19 @@ id "$USERNAME" >/dev/null 2>&1
 
 if [ $? -ne 0 ]
 then
-    echo "User $USERNAME does not exist. Creating..."
+    echo "User $USERNAME does not exist. $G Creating..$N"
     useradd "$USERNAME" | tee -a $LOG_FILE
     VALIDATE $? "Creating user $USERNAME"
 else
-    echo "User $USERNAME already exists. Nothing to do."
+    echo "User $USERNAME already exists. $Y SKIPPING..$N"
 fi
+
+mkdir -p /app
+VALIDATE $? "Creating /app folder"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>LOG_FILE 
+VALIDATE $? "Downloading backend application code"
+
+
 
 
