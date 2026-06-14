@@ -32,13 +32,14 @@ echo "Script started executing at: $(date)" | tee -a $LOG_FILE
 
 CHECK_ROOT
 
-dnf list disabled nodejs 
+dnf module list disabled nodejs 
 
 if [ $? -ne 0 ]
 then
-    dnf disable nodejs -y
+    dnf module disable nodejs -y
     echo "nodejs is not disabled. go to disable."
     VALIDATE $? "disabling the nodejs"
 else
     echo "nodejs is already disabled. nothing to do"
 fi
+
