@@ -43,7 +43,7 @@ then
     dnf module disable nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Disable default nodejs"
 else
-    echo "NodeJS module is already disabled. $G Nothing to do.$N"
+    echo "NodeJS module is already disabled. $Y Nothing to do.$N"
 fi
 
 # Enable NodeJS 20 stream if not already enabled
@@ -55,7 +55,7 @@ then
     dnf module enable nodejs:20 -y | tee -a $LOG_FILE
     VALIDATE $? "Enable nodejs:20"
 else
-    echo "NodeJS:20 module is already enabled. Nothing to do."
+    echo "NodeJS:20 module is already enabled. $Y Nothing to do.$N"
 fi
 
 # Install NodeJS package if not already installed
@@ -67,7 +67,7 @@ then
     dnf install nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Install nodejs"
 else
-    echo "NodeJS is already installed. Nothing to do."
+    echo "NodeJS is already installed. $Y Nothing to do.$N"
 fi
 
 USERNAME=expense
