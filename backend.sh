@@ -39,11 +39,11 @@ dnf module list disabled nodejs >/dev/null 2>&1 | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
-    echo "NodeJS module is not disabled. $G Disabling..$N"
+    echo "NodeJS module is not disabled. Disabling.."
     dnf module disable nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Disable default nodejs"
 else
-    echo "NodeJS module is already disabled. $Y Nothing to do.$N"
+    echo "NodeJS module is already disabled. Nothing to do."
 fi
 
 # Enable NodeJS 20 stream if not already enabled
@@ -51,7 +51,7 @@ dnf module list enabled nodejs | grep -q "20" | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
-    echo "NodeJS:20 module is not enabled. $G Enabling...$N"
+    echo "NodeJS:20 module is not enabled. Enabling.."
     dnf module enable nodejs:20 -y | tee -a $LOG_FILE
     VALIDATE $? "Enable nodejs:20"
 else
@@ -63,11 +63,11 @@ dnf list installed nodejs >/dev/null 2>&1 | tee -a $LOG_FILE
 
 if [ $? -ne 0 ]
 then
-    echo "NodeJS is not installed. $G Installing...$N"
+    echo "NodeJS is not installed. Installing.."
     dnf install nodejs -y | tee -a $LOG_FILE
     VALIDATE $? "Install nodejs"
 else
-    echo "NodeJS is already installed. $Y Nothing to do.$N"
+    echo "NodeJS is already installed. Nothing to do."
 fi
 
 USERNAME=expense
