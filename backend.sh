@@ -32,37 +32,40 @@ echo "Script started executing at: $(date)" | tee -a $LOG_FILE
 
 CHECK_ROOT
 
-dnf module list disabled nodejs 
+# Disable default NodeJS module if not already disabled
+dnf module list disabled nodejs >/dev/null 2>&1
 
 if [ $? -ne 0 ]
 then
+    echo "NodeJS module is not disabled. Disabling..."
     dnf module disable nodejs -y
-    echo "nodejs is not disabled. going to disable."
     VALIDATE $? "Disable default nodejs"
 else
-    echo "nodejs is already default disabled. nothing to do"
+    echo "NodeJS module is already disabled. Nothing to do."
 fi
 
-dnf module list enabled nodejs
-
-if [ $? -ne 0 ]
-then 
-    dnf module enable nodejs:20 -y
-    echo "nodejs is not enabled. going to enable."
-    VALIDATE $? "enabling the nodejs"
-else 
-    echo "nodejs is already enabled. nothing to do"
-fi
-
-dnf list installed nodejs
+# Enable NodeJS 20 stream if not already enabled
+dnf module list enabled nodejs | grep -q "20"
 
 if [ $? -ne 0 ]
 then
-    dnf install nodejs -y
-    echo "nodejs is not installed. going to install"
-    VALIDATE $? "Installing nodejs"
+    echo "NodeJS:20 module is not enabled. Enabling..."
+    dnf module enable nodejs:20 -y
+    VALIDATE $? "Enable nodejs:20"
 else
-    echo "nodejs is installed. nothing to do"
+    echo "NodeJS:20 module is already enabled. Nothing to do."
+fi
+
+# Install NodeJS package if not already installed
+dnf list installed nodejs >/dev/null 2>&1
+
+if [ $? -ne 0 ]
+then
+    echo "NodeJS is not installed. Installing..."
+    dnf install nodejs -y
+    VALIDATE $? "Install nodejs"
+else
+    echo "NodeJS is already installed. Nothing to do."
 fi
 
 
