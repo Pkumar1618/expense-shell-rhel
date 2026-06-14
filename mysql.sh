@@ -45,7 +45,7 @@ else
     echo "mysql is already install. nothing to do"
 fi
 
-systemctl list enabled mysqld
+systemctl is enabled mysqld
 
 if [ $? -ne 0 ]
 then
@@ -56,7 +56,7 @@ else
     echo "mysql server is already enabled. nothing to do"
 fi
 
-systemctl list started mysqld
+systemctl is started mysqld
 
 if [ $? -ne 0 ]
 then
