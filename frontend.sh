@@ -48,7 +48,7 @@ fi
 systemctl enable nginx &>>LOG_FILE
 VALIDATE $? "Enabled nginx"
 
-systemctl start ngixn &>>LOG_FILE
+systemctl start nginx &>>LOG_FILE
 VALIDATE $? "Started nginx"
 
 rm -rf /usr/share/nginx/html/* &>>LOG_FILE
